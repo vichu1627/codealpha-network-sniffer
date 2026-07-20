@@ -141,40 +141,7 @@ Run `python3 sniffer.py --help` to see all options.
 
 ---
 
-## Trying the pure-socket version (Linux only)
 
-```bash
-sudo python3 sniffer_socket.py
-```
-
-This version doesn't use Scapy at all — it manually unpacks the raw bytes of each Ethernet, IP, TCP, and UDP header using Python's `struct` module. Reading through its code is a great way to understand what a library like Scapy is doing for you behind the scenes.
-
----
-
-## How it works (short explanation for your internship report)
-
-1. **Your network card** normally only hands your OS the packets addressed to you. A raw/promiscuous-mode socket asks the OS to hand over *every* packet the interface sees instead.
-
-2. **Each packet arrives as a stream of raw bytes.** Networking uses a layered model (Ethernet → IP → TCP/UDP → application data), so we peel off one header at a time, moving further into the packet:
-   - **Ethernet header**: source/destination MAC address, next protocol type.
-   - **IP header**: source/destination IP address, TTL, next protocol type.
-   - **TCP/UDP header**: source/destination port numbers, flags.
-   - **Payload**: whatever's left — the actual application data (could be part of a webpage, a DNS query, etc.).
-
-3. **We print each of these fields** so you can see exactly how data is structured as it travels across a network.
-
----
-
-## Troubleshooting
-
-| Problem | Fix |
-|---|---|
-| `PermissionError` | Run with `sudo` (Linux/Mac) or as Administrator (Windows). |
-| `ModuleNotFoundError: No module named 'scapy'` | Run `pip install -r requirements.txt` inside your activated venv. |
-| No packets appear | Generate traffic (browse the web, ping), or check you picked the right interface with `-i`. |
-| Scapy warns about missing Npcap (Windows) | Install [Npcap](https://npcap.com/) — see Step 4. |
-
----
 
 ## Project structure
 
@@ -189,37 +156,7 @@ network-sniffer/
 
 ---
 
-## Pushing this project to GitHub
 
-1. **Create a new repository on GitHub:**
-   - Go to [github.com/new](https://github.com/new)
-   - Name it something like `network-sniffer` or `codealpha-network-sniffer`
-   - Leave **"Add a README"** unchecked (you already have one)
-   - Click **Create repository**
-
-2. **Initialize git in your project folder and push:**
-
-   ```bash
-   cd network-sniffer
-   git init
-   git add .
-   git commit -m "Initial commit: basic network sniffer"
-   git branch -M main
-   git remote add origin https://github.com/<your-username>/network-sniffer.git
-   git push -u origin main
-   ```
-
-   Replace `<your-username>` with your actual GitHub username, and `network-sniffer` with whatever repo name you chose.
-
-3. If asked to log in, GitHub no longer accepts your password for this over HTTPS — use a **Personal Access Token** instead:
-   - GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token → tick `repo` scope → Generate.
-   - Use that token as your password when git prompts you.
-
-4. Double check `.pcap` files aren't committed (the `.gitignore` already excludes them) — capture files can contain private data from your network, so it's best practice to keep them out of a public repo.
-
-**That's it — your repo is live!** You can link to it in your internship submission.
-
----
 
 ## Credits
 
