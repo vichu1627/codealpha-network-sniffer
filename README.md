@@ -16,7 +16,7 @@ A beginner-friendly Python packet sniffer built for the **CodeAlpha Cyber Securi
 | File | Requires | Works on |
 |---|---|---|
 | `sniffer.py` | Scapy | Windows, macOS, Linux |
-| `sniffer_socket.py` | Nothing (built-in `socket` only) | Linux only |
+
 
 > Use `sniffer.py` unless you specifically want to see how sniffing works with zero external libraries.
 
